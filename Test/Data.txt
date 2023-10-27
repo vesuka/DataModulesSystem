@@ -1,9 +1,9 @@
 ﻿{
-	< "tapok" *Hello world!ddds* >
-	< "tapok2" *Hello world!asd* >
+	< "tapok" *Hello world!ddds* >;
+	< "tapok2" *Hello world!asd* >;
 	< "tapok3" *Hello worldasdasd!* > - 
 	{
-	<"Hello world">
-	}  
-}
-< "tapok3" *Hello worldasdasd!* > 
+		<*Hello World Data*>;
+	};
+};
+< "tapok3" *Hello worldasdasd!* >;

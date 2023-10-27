@@ -2,7 +2,7 @@
 {
 	public class Module
 	{
-		public string Name { get; private set; }
+		public string Name { get; set; }
 
 		public string? data;
 
@@ -14,5 +14,8 @@
 			this.data = data;
 			childs = new ();
 		}
+
+		
+		
 	}
 }

@@ -15,7 +15,12 @@ namespace DataModulesSystem
 			for(int index = 0; index < Text.Length; index++)
 			{
 				if (Text[index] == '{')
-					resultModule.childs.AddRange(LoadNamespace(Text, ref index));
+				{
+					Module NameSpace = new ("No Named namespace");
+					NameSpace.childs.AddRange(LoadNamespace(Text, ref index));
+					resultModule.childs.Add(NameSpace);
+
+				}
 				else if (Text[index] == '<')
 					resultModule.childs.Add(LoadModule(Text, ref index));
 			}
@@ -26,6 +31,8 @@ namespace DataModulesSystem
 		{
 			string? name = null;
 			string? data = null;
+
+			Module result = new ("");
 
 			if (text[index] != '<') throw new System.Exception();
 
@@ -51,9 +58,32 @@ namespace DataModulesSystem
 					}
 				}
 			}
-			name ??= "ModuleStandartName";
+			for(index++;index < text.Length; index++)
+			{
+				if (text[index] == ';') break;
+				if ( text[index] == ' ' || text[index] == '\r' || text[index] == '\n' || text[index] == '\t') continue;
+				else if (text[index] == '-')
+				{
+					index++;
+					for (; index < text.Length; index++)
+					{
+						if (text[index] == ';') break;
+						if (text[index] == ' ' || text[index] == '\r' || text[index] == '\n' || text[index] == '\t') continue;
+						if (text[index] != '{') throw new System.Exception($"{text[index]}");
 
-			return new Module(name, data);
+						result.childs.AddRange(LoadNamespace(text, ref index));
+						break;
+					}
+				}
+				else
+				{
+					throw new System.Exception(text[index].ToString());
+				}
+			}
+
+			result.Name = name ?? "ModuleStandartName";
+			result.data = data;
+			return result;
 		}
 		private static Module[] LoadNamespace(string text, ref int index)
 		{
@@ -67,18 +97,8 @@ namespace DataModulesSystem
 				if (text[index] == '}') break;
 
 				if (text[index] == ' ' || text[index] == '\r' || text[index] == '\n' || text[index] == '\t') continue;
-				if (text[index] == '-')
-				{
-					index++;
-					for(;index < text.Length; index++)
-					{
-						if (text[index] == ' ' || text[index] == '\r' || text[index] == '\n' || text[index] == '\t') continue;
-						if (text[index] != '{') throw new System.Exception();
-
-						result[^1].childs.AddRange(LoadNamespace(text, ref index));
-					}
-				}
-				else if (text[index] != '<') throw new System.Exception();
+				
+				else if (text[index] != '<') throw new System.Exception($"{text[index]}");
 				result.Add(LoadModule(text, ref index));
 			}
 
