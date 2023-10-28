@@ -15,7 +15,26 @@
 			childs = new ();
 		}
 
-		
-		
+		public Module GetChildForName(string name)
+		{
+			for(int i = 0; i < childs.Count; i++)
+			{
+				if (childs[i].Name == name)
+				{
+					return childs[i];
+				}
+			}
+			throw new System.Exception("Name is not Found");
+		}
+		public Module GetChildForPath(string path)
+		{
+			string[] names = path.Split(':');
+			Module activ = this;
+			for(int i = 0;i < names.Length;i++)
+			{
+				activ = activ.GetChildForName(names[i]);
+			}
+			return activ;
+		}
 	}
 }

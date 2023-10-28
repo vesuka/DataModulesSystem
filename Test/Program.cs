@@ -6,7 +6,7 @@ namespace Test
 		static void Main()
 		{
 			Module module = LinerDataModules.Load("C:\\Users\\Alex\\source\\repos\\DataModulesSystem\\Test\\Data.txt");
-				
+			Console.WriteLine(module.GetChildForName("tapok3").data);	
 		}
 	}
 }
