@@ -1,4 +1,6 @@
-﻿namespace DataModulesSystem
+﻿using System.Collections.Generic;
+
+namespace DataModulesSystem
 {
 	public class Module
 	{
@@ -35,6 +37,18 @@
 				activ = activ.GetChildForName(names[i]);
 			}
 			return activ;
+		}
+		public Module[] GetChildsForNAme(string name)
+		{
+			List<Module> module = new();
+			for(int i = 0; i< childs.Count; i++)
+			{
+				if (childs[i].Name == name)
+				{
+					module.Add(childs[i]);
+				}
+			}
+			return module.ToArray();
 		}
 	}
 }
